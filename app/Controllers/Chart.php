@@ -11,7 +11,7 @@ use Exception;
 use \Datetime;
 
 use ReflectionException;
-class Home extends BaseController
+class Chart extends BaseController
 {
     public function index()
     {
@@ -95,13 +95,9 @@ class Home extends BaseController
                 );
                 
         }
-        return view('welcome_message',$data);
+        return view('chart',$data);
     }
     
    
-    public function get()
-    {
-        
-       return ('welcome_message');
-    }
+    
 }
