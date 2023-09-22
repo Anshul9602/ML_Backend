@@ -17,7 +17,7 @@ use \Datetime;
 //update service    
 class TransactionModel extends Model
 {
-    protected $table = 'transaction';
+    protected $table = 'transactions';
     // protected $allowedFields = [
     //     'name',
     //     'email',
@@ -26,38 +26,40 @@ class TransactionModel extends Model
     protected $db;
     protected $updatedField = 'updated_at';
 
-   
+
     public function findTById($id)
     {
+
         $post = $this
             ->asArray()
             ->where(['wallet_id' => $id])
             ->findAll();
 
-        if (!$post) 
-            throw new Exception('Service does not exist for specified id');
+        if (!$post)
+            throw new Exception('tranziction does not exist for specified id');
 
         return $post;
     }
-    public function findPostById1($user_id)
+    public function findTById1($id)
     {
+
         $post = $this
             ->asArray()
-            ->where(['user_id' => $user_id])
-            ->first();
+            ->where(['wallet_id' => $id])
+            ->findAll();
 
-        if (!$post){
+        if (!$post) {
             return false;
-        } 
-        else{
-            return true;
+        } else {
+            return $post;
         }
-
-        
     }
+
     public function findAll(int $limit = 0, int $offset = 0)
     {
+
         if ($this->tempAllowCallbacks) {
+
             // Call the before event and check for a return
             $eventData = $this->trigger('beforeFind', [
                 'method'    => 'findAll',
@@ -65,8 +67,9 @@ class TransactionModel extends Model
                 'offset'    => $offset,
                 'singleton' => false,
             ]);
+            // echo $eventData;
+            if (!empty($eventData['returnData'])) {
 
-            if (! empty($eventData['returnData'])) {
                 return $eventData['data'];
             }
         }
@@ -96,13 +99,13 @@ class TransactionModel extends Model
             ->where(['wallet_id' => $id])
             ->delete();
 
-        if (!$post) 
+        if (!$post)
             throw new Exception('Service does not exist for specified id');
 
         return $post;
     }
-    
-   
+
+
     public function activity($data): bool
     {
         if (empty($data)) {
@@ -110,173 +113,138 @@ class TransactionModel extends Model
             return true;
         }
 
-           $w_id = $data['w_id'];
-           $total_am = $data['total_am'];
-           $type = $data['t_type'];
-           $status = $data['status'];
-           $date = date("m/d/Y h:i A");
-           $date = new DateTime();
-           $date = date_default_timezone_set('Asia/Kolkata');
-            $sql1 = "INSERT INTO `transactions`
+        $w_id = $data['w_id'];
+        $total_am = $data['total_am'];
+        $type = $data['t_type'];
+        $status = $data['status'];
+
+        $date = new DateTime();
+        $date = date_default_timezone_set('Asia/Kolkata');
+        $date1 = date("m-d-Y h:i A");
+        $sql1 = "INSERT INTO `transactions`
             (`transaction_id`, `wallet_id`,`amount`, `type`,  `status`, `date`) 
-            VALUES (NULL, '$w_id', '$total_am', '$type', '$status','$date')";
-              // echo "<pre>"; print_r($sql1);
-           // echo "</pre>";
-           // die();
-           $post1 = $this->db->query($sql1);
+            VALUES (NULL, '$w_id', '$total_am', '$type', '$status','$date1')";
+        // echo "<pre>"; print_r($sql1);
+        // echo "</pre>";
+        // die();
+        $post1 = $this->db->query($sql1);
 
 
-    if (!$post1) 
-        throw new Exception('Game does not save specified time');
+        if (!$post1)
+            throw new Exception('Game does not save specified time');
 
-    return $post1;
-
-       
+        return $post1;
     }
-    public function update1($id ,$data): bool
+    public function update1($id, $data): bool
     {
 
-    // echo $id;
+        // echo $id;
 
         if (empty($data)) {
             echo "1";
             return true;
         }
         $g_title = $data['g_title'];
-      
-        $status = $data['status'];
-        
-       // $date = date("m/d/Y h:i A");
-        // $date = new DateTime();
-        // $date = date_default_timezone_set('Asia/Kolkata');
-   
-        // $date = date("m/d/Y h:i A");
 
+        $status = $data['status'];
 
         $sql = "UPDATE `wallet` SET  
-        g_title= '$g_title',
-        g_name_hindi= '$g_name_hindi',
-        open_t= '$open_t',
-        close_t= '$close_t',
-        status= '$status',
-        maket_status= '$maket_status',
-         WHERE g_id = $id";
-        // echo "<pre>"; print_r($sql);
-        // echo "</pre>";
-        $post = $this->db->query($sql);
-    if (!$post) 
-        throw new Exception('Game does not exist for specified id');
-
-    return $post;
-
+        g_title= '$g_title'
        
+         WHERE g_id = $id";
+
+        $post = $this->db->query($sql);
+        if (!$post)
+            throw new Exception('Game does not exist for specified id');
+
+        return $post;
     }
-    public function update_am($id ,$data): bool
+    public function update_am($id, $data): bool
     {
 
-       // echo $id;
+        // echo $id;
 
         if (empty($data)) {
             echo "1";
             return true;
         }
         $total_am = $data['total_am'];
-    //    $date = date("m/d/Y h:i A");
-    //     $date = new DateTime();
-    //     $date = date_default_timezone_set('Asia/Kolkata');
-   
-    //     $date = date("m/d/Y h:i A");
-
 
         $sql = "UPDATE `wallet` SET  
         total_amount= '$total_am',
          WHERE user_id = $id";
-        // echo "<pre>"; print_r($sql);
-        // echo "</pre>";
+
         $post = $this->db->query($sql);
-    if (!$post) 
-        throw new Exception('Game does not exist for specified id');
+        if (!$post)
+            throw new Exception('Game does not exist for specified id');
 
-    return $post;
-
-       
+        return $post;
     }
-    public function updatepub($id ,$data): bool
+    public function updatepub($id, $data): bool
     {
 
-    // echo $id;
+        // echo $id;
 
         if (empty($data)) {
             echo "1";
             return true;
         }
         $status = $data['status'];
-       // $date = date("m/d/Y h:i A");
-        // $date = new DateTime();
-        // $date = date_default_timezone_set('Asia/Kolkata');
-   
-        // $date = date("m/d/Y h:i A");
 
         $sql = "UPDATE `wallet` SET  status= '$status' WHERE wallet_id = $id";
-        // echo "<pre>"; print_r($sql);
-        // echo "</pre>";
+
         $post = $this->db->query($sql);
-    if (!$post) 
-        throw new Exception('wallet does not exist for specified id');
+        if (!$post)
+            throw new Exception('wallet does not exist for specified id');
 
-    return $post;
-
-       
+        return $post;
     }
-   
+
     public function get_drafts($published)
     {
-       
-            $post = $this
-                ->asArray()
-                ->where(['published' => $published])
-                ->findAll();
-    
-            if (!$post) 
-                throw new Exception('Post does not exist for specified id');
-    
-            return $post;
-       
+
+        $post = $this
+            ->asArray()
+            ->where(['published' => $published])
+            ->findAll();
+
+        if (!$post)
+            throw new Exception('Post does not exist for specified id');
+
+        return $post;
     }
-   
+
     public function curPostRequest()
     {
         /* Endpoint */
         $url = 'https://fcm.googleapis.com/fcm/send';
-   
+
         /* eCurl */
         $curl = curl_init($url);
-   
+
         /* Data */
         $data = [
-            'name'=>'John Doe', 
-            'email'=>'johndoe@yahoo.com'
+            'name' => 'John Doe',
+            'email' => 'johndoe@yahoo.com'
         ];
-   
+
         /* Set JSON data to POST */
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-            
+
         /* Define content type */
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
             'Content-Type:application/json',
             'App-Key: JJEK8L4',
             'App-Secret: 2zqAzq6'
         ));
-            
+
         /* Return json */
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            
+
         /* make request */
         $result = curl_exec($curl);
-             
+
         /* close curl */
         curl_close($curl);
     }
-
-
 }

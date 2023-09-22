@@ -15,9 +15,9 @@ use \Datetime;
 // deletes by id
 // activity
 //update service    
-class PostModel extends Model
+class SPostModel extends Model
 {
-    protected $table = 'g_service';
+    protected $table = 'gs_service';
     // protected $allowedFields = [
     //     'name',
     //     'email',
@@ -37,38 +37,27 @@ class PostModel extends Model
             return true;
         }
      $g_title = $data['g_title'];
-     $g_name_hindi = $data['g_name_hindi'];
-
-     $ot = $data['open_t']; // 24-hour format
-     $ct = $data['close_t']; // 24-hour format
-
-     // Convert 24-hour format to 12-hour format
-    //  $time12 = date('h:i A', strtotime($ot));
-     $open_t = date('h:i A', strtotime($ot));
-     $close_t = date('h:i A', strtotime($ct));
+     $open_t = $data['open_t'];
      $status = $data['status'];
-     $maket_status = $data['maket_status'];
-    
-        $sql = "INSERT INTO `g_service` (`g_id`, 
-        `g_title`, 
-        `g_name_hindi`, 
-        `open_t`, 
-        `close_t`, 
+     $market_status = $data['market_status'];
+    // $date = date("m/d/Y h:i A");
+    //  $date = new DateTime();
+    //  $date = date_default_timezone_set('Asia/Kolkata');
+    //  $date = date("m/d/Y h:i A");
+        $sql = "INSERT INTO `gs_service` (`g_id`, 
+        `g_title`, `open_t`, 
         `status`, 
-        `maket_status`) VALUES (NULL, 
+        `market_status`) VALUES (NULL, 
         '$g_title', 
-        '$g_name_hindi', 
         '$open_t', 
-        '$close_t', 
         '$status', 
-        '$maket_status' 
+        '$market_status' 
         )";
         $post = $this->db->query($sql);
         if (!$post) 
         throw new Exception('Post does not exist for specified id');
         return $post;  
     }
-    
     public function findPostById($id)
     {
         $post = $this
@@ -156,18 +145,14 @@ class PostModel extends Model
             return true;
         }
         $g_title = $data['g_title'];
-        $g_name_hindi = $data['g_name_hindi'];
-        $maket_status = $data['maket_status'];
+        $market_status = $data['market_status'];
         $open_t = $data['open_t'];
-        $close_t = $data['close_t'];
         $status = $data['status'];
-        $sql = "UPDATE `g_service` SET  
+        $sql = "UPDATE `gs_service` SET  
         g_title= '$g_title',
-        g_name_hindi= '$g_name_hindi',
         open_t= '$open_t',
-        close_t= '$close_t',
         status= '$status',
-        maket_status= '$maket_status'
+        market_status= '$market_status'
          WHERE g_id = $id";
         $post = $this->db->query($sql);
         if (!$post) 
@@ -182,7 +167,7 @@ class PostModel extends Model
             return true;
         }
         $status = $data['status'];
-        $sql = "UPDATE `g_service` SET  status= '$status' WHERE g_id = $id";
+        $sql = "UPDATE `gs_service` SET  status= '$status' WHERE g_id = $id";
         $post = $this->db->query($sql);
     if (!$post) 
         throw new Exception('service does not exist for specified id');
@@ -196,8 +181,8 @@ class PostModel extends Model
             echo "1";
             return true;
         }
-        $maket_status = $data['maket_status'];
-        $sql = "UPDATE `g_service` SET  maket_status= '$maket_status' WHERE g_id = $id";
+        $market_status = $data['market_status'];
+        $sql = "UPDATE `gs_service` SET  market_status= '$market_status' WHERE g_id = $id";
         $post = $this->db->query($sql);
     if (!$post) 
         throw new Exception('service does not exist for specified id');
@@ -205,7 +190,6 @@ class PostModel extends Model
     return $post;
 
     }
-   
     
 
 }

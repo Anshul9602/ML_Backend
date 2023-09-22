@@ -15,9 +15,9 @@ use \Datetime;
 // deletes by id
 // activity
 //update service    
-class PostModel extends Model
+class PostTypeModel extends Model
 {
-    protected $table = 'g_service';
+    protected $table = 'gn_type';
     // protected $allowedFields = [
     //     'name',
     //     'email',
@@ -26,54 +26,68 @@ class PostModel extends Model
     protected $db;
     protected $updatedField = 'updated_at';
 
-   
-
-
-    /// g section start == //
     public function save($data): bool
     {
         if (empty($data)) {
             echo "1";
             return true;
         }
-     $g_title = $data['g_title'];
-     $g_name_hindi = $data['g_name_hindi'];
+     $g_title = $data['gt_name'];
+     
+    // $date = date("m/d/Y h:i A");
+    //  $date = new DateTime();
+    //  $date = date_default_timezone_set('Asia/Kolkata');
 
-     $ot = $data['open_t']; // 24-hour format
-     $ct = $data['close_t']; // 24-hour format
-
-     // Convert 24-hour format to 12-hour format
-    //  $time12 = date('h:i A', strtotime($ot));
-     $open_t = date('h:i A', strtotime($ot));
-     $close_t = date('h:i A', strtotime($ct));
-     $status = $data['status'];
-     $maket_status = $data['maket_status'];
-    
-        $sql = "INSERT INTO `g_service` (`g_id`, 
-        `g_title`, 
-        `g_name_hindi`, 
-        `open_t`, 
-        `close_t`, 
-        `status`, 
-        `maket_status`) VALUES (NULL, 
-        '$g_title', 
-        '$g_name_hindi', 
-        '$open_t', 
-        '$close_t', 
-        '$status', 
-        '$maket_status' 
+    //  $date = date("m/d/Y h:i A");
+        $sql = "INSERT INTO `gn_type` (`g_id`, 
+        `g_title`) VALUES (NULL, 
+        '$g_title' 
         )";
+        // echo "<pre>"; print_r($sql);
+        // echo "</pre>";
+        // die;
         $post = $this->db->query($sql);
-        if (!$post) 
+       
+
+    if (!$post) 
         throw new Exception('Post does not exist for specified id');
-        return $post;  
+
+    return $post;
+
+       
+    }
+    public function star()
+{
+    $sql = "SELECT * FROM gn_type
+    WHERE gt_id IN (1, 3, 4, 5)";
+    
+    $query = $this->db->query($sql);
+
+    if (!$query) {
+        throw new Exception('Query execution failed');
     }
     
+    $post = $query->getResultArray();
+    return $post;
+   
+}
     public function findPostById($id)
     {
         $post = $this
             ->asArray()
             ->where(['g_id' => $id])
+            ->first();
+
+        if (!$post) 
+            throw new Exception('Service does not exist for specified id');
+
+        return $post;
+    }
+    public function findById($id)
+    {
+        $post = $this
+            ->asArray()
+            ->where(['gt_id' => $id])
             ->first();
 
         if (!$post) 
@@ -143,14 +157,27 @@ class PostModel extends Model
            $activity_amount = $data['g_amount'];
            $g_number = $data['g_number'];
            $date = date("M-d-Y h:i A");
-         $sql1 = "INSERT INTO `g_activity_log` (`activity_log_id`, `user_id`,`username`, `dp_url`, `activity_name`, `activity_amount`,  `g_id`, `timestamp`) VALUES (NULL, '$user_id', '$username', '$dp_url', '$activity_name', '$activity_amount','$g_number','$date')";
+
+
+       $sql1 = "INSERT INTO `g_activity_log` (`activity_log_id`, `user_id`,`username`, `dp_url`, `activity_name`, `activity_amount`,  `g_id`, `timestamp`) VALUES (NULL, '$user_id', '$username', '$dp_url', '$activity_name', '$activity_amount','$g_number','$date')";
+       // echo "<pre>"; print_r($sql1);
+       // echo "</pre>";
+       // die();
         $post1 = $this->db->query($sql1);
-        if (!$post1) 
+
+
+    if (!$post1) 
         throw new Exception('Game does not save specified time');
-        return $post1; 
+
+    return $post1;
+
+       
     }
     public function update1($id ,$data): bool
     {
+
+    // echo $id;
+
         if (empty($data)) {
             echo "1";
             return true;
@@ -161,51 +188,62 @@ class PostModel extends Model
         $open_t = $data['open_t'];
         $close_t = $data['close_t'];
         $status = $data['status'];
+        
+       // $date = date("m/d/Y h:i A");
+        // $date = new DateTime();
+        // $date = date_default_timezone_set('Asia/Kolkata');
+   
+        // $date = date("m/d/Y h:i A");
+
+
         $sql = "UPDATE `g_service` SET  
         g_title= '$g_title',
         g_name_hindi= '$g_name_hindi',
         open_t= '$open_t',
         close_t= '$close_t',
         status= '$status',
-        maket_status= '$maket_status'
+        maket_status= '$maket_status',
          WHERE g_id = $id";
+        // echo "<pre>"; print_r($sql);
+        // echo "</pre>";
         $post = $this->db->query($sql);
-        if (!$post) 
+    if (!$post) 
         throw new Exception('Game does not exist for specified id');
 
-         return $post;  
+    return $post;
+
+       
     }
     public function updatepub($id ,$data): bool
     {
+
+    // echo $id;
+
         if (empty($data)) {
             echo "1";
             return true;
         }
         $status = $data['status'];
+       // $date = date("m/d/Y h:i A");
+        // $date = new DateTime();
+        // $date = date_default_timezone_set('Asia/Kolkata');
+   
+        // $date = date("m/d/Y h:i A");
+
         $sql = "UPDATE `g_service` SET  status= '$status' WHERE g_id = $id";
+        // echo "<pre>"; print_r($sql);
+        // echo "</pre>";
         $post = $this->db->query($sql);
     if (!$post) 
         throw new Exception('service does not exist for specified id');
 
     return $post;
 
-    }
-    public function updatepub1($id ,$data): bool
-    {
-        if (empty($data)) {
-            echo "1";
-            return true;
-        }
-        $maket_status = $data['maket_status'];
-        $sql = "UPDATE `g_service` SET  maket_status= '$maket_status' WHERE g_id = $id";
-        $post = $this->db->query($sql);
-    if (!$post) 
-        throw new Exception('service does not exist for specified id');
-
-    return $post;
-
+       
     }
    
     
+   
+
 
 }
