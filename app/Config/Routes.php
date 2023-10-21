@@ -148,6 +148,7 @@ $routes->post('/sresult/result_delete_id/(:num)', 'Result::sdestroy/$1'); //by b
 
 // basic information all 
 $routes->get('/basic', 'Basic::index');
+$routes->get('/lot_log', 'Basic::lot');
 $routes->post('/basic/update/(:num)', 'Basic::update/$1');
 $routes->get('/banners', 'Users::banners'); // banner
 $routes->post('/banner_add', 'Users::banner_add'); // banner add

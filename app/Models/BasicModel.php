@@ -156,6 +156,20 @@ class BasicModel extends Model
    
        return $result;
     }
+    public function lot()
+    {
+
+       // echo $id;
+       $sql = "SELECT * FROM `products`";
+       $query = $this->db->query($sql);
+       $result = $query->getResult();
+   
+       if (empty($result)) {
+           throw new Exception('No data found in g_rate table.');
+       }
+   
+       return $result;
+    }
     public function rates()
     {
 

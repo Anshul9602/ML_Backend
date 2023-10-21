@@ -1412,17 +1412,24 @@ class Result extends BaseController
 
         $model = new ResultModel();
         $g_id = $input['g_id'];
-
         $date = $input['date']; // Your original date in MM/DD/YYYY format
+        $date11 = date("m-d-Y", strtotime($date));
+       
         $input['date1'] = date("m-d-Y", strtotime($date));
-
+        $post1 = $model->where('g_id', $g_id)
+        ->where('result_date', $date11) // Add this line to filter by date
+        ->first();
+        
             if ($input['Session'] == "close") {
-                $post = $this->winall_pr($input);
+                if($post1){
+                    $id = $post1['re_id'];
+                    $input['Open_Panna'] = $post1['Open_Panna'];
+                    $post = $this->winall_pr($id, $input);
+                }
+
+                
             }
          else {
-     
-           
-         
             $post = $this->win_pr($input);
         }
        
@@ -1661,7 +1668,7 @@ class Result extends BaseController
        
         return $data['win'];
     }
-    public function winall_pr($result)
+    public function winall_pr($id, $result)
     {
 
         $model2 = new BidModel();
@@ -1672,7 +1679,7 @@ class Result extends BaseController
         $date1 = date("m-d-Y");
 
         $bid = $model2->findAll();
-
+      
         $data['post'] = array();
         foreach ($bid as $b1) {
             $dateTime = \DateTime::createFromFormat('m-d-Y h:i A', $b1['date']);
@@ -1728,7 +1735,7 @@ class Result extends BaseController
                 // Output will be the second digit of the sum
             }
         }
-
+        
         $model = new BasicModel();
         $rate1 = $model->rate();
         $rate = (array)$rate1[0];
@@ -1801,6 +1808,7 @@ class Result extends BaseController
                         }
                     }
                     if ($b2['gt_id'] == '4') {
+                      
                         $rr =  $rate['Double_Panna_Amount'] / $rate['Double_Panna_Point'];
                         if ($b2['Close_Panna'] == $result['Panna']) {
                             $model1 = new BidModel();
@@ -1826,6 +1834,7 @@ class Result extends BaseController
                             $win_amount = $b2['total_amount'] * $rr;
                             $date = $b2['date'];
                         }else{
+                           
                             $g_id = ''; 
                         }
                     }
@@ -1917,7 +1926,9 @@ class Result extends BaseController
                         }
                     }
                 } elseif ($b2['session'] == "open") {
+                
                     if ($b2['gt_id'] == '6') {
+                        
                         $rr =  $rate['Half_Sangam_Amount'] / $rate['Half_Sangam_Point'];
                         if ($b2['Close_Panna'] == $result['Panna'] && $b2['Open_Digits'] == $start) {
 
@@ -1946,8 +1957,11 @@ class Result extends BaseController
                         }else{
                             $g_id = ''; 
                         }
+                    }else{
+                        $g_id = '';
                     }
                     if ($b2['gt_id'] == '7') {
+                      
                         $rr =  $rate['Full_Sangam_Amount'] / $rate['Full_Sangam_Point'];
                         if ($b2['Open_Panna'] == $result['Open_Panna'] && $b2['Close_Panna'] == $result['Panna']) {
                             $model1 = new BidModel();
@@ -1975,10 +1989,12 @@ class Result extends BaseController
                         }else{
                             $g_id = ''; 
                         }
+                    }else{
+                        $g_id = '';
                     }
                 } else {
                     if ($b2['gt_id'] == '2') {
-
+                     
                         $result['digt'] = $dig . $start;
                         // echo $result['digt'];
                         // die();
@@ -2016,7 +2032,6 @@ class Result extends BaseController
                 // die();
                 if($g_id != '') {
 
-                        
                     $data['win'][] = array(
                     'g_id' => $g_id,
                     'g_title' => $g_title,

@@ -19,6 +19,17 @@ class Basic extends BaseController
             ]
         );
     }
+    public function lot()
+    {
+        $model = new BasicModel();
+
+        return $this->getResponse(
+            [
+                'message' => 'Post retrieved successfully',
+                'post' => $model->lot()
+            ]
+        );
+    }
     public function latest_log($id)
     {
         $model = new UserAModel();
