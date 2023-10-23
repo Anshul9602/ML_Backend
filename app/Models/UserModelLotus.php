@@ -132,7 +132,7 @@ class UserModelLotus extends Model
         
     $user_number = $data['user_number'];
     $pin = $data['pin'];
-    $status = "0";
+    $status = "1";
     
     $user_name = $data['user_name'];
     $date = new DateTime();

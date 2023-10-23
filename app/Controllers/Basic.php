@@ -8,6 +8,17 @@ use Exception;
 
 class Basic extends BaseController
 {
+    public function playindex()
+    {
+        $model = new BasicModel();
+
+        return $this->getResponse(
+            [
+                'message' => 'Post retrieved successfully',
+                'post' => $model->play_basic()
+            ]
+        );
+    }
     public function index()
     {
         $model = new BasicModel();

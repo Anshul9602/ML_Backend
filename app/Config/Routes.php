@@ -147,6 +147,7 @@ $routes->post('/sresult/user_id/(:num)','Result::sR_all/$1'); //bid all by user 
 $routes->post('/sresult/result_delete_id/(:num)', 'Result::sdestroy/$1'); //by bid id
 
 // basic information all 
+$routes->get('/play_status', 'Basic::playindex');
 $routes->get('/basic', 'Basic::index');
 $routes->get('/lot_log', 'Basic::lot');
 $routes->post('/basic/update/(:num)', 'Basic::update/$1');

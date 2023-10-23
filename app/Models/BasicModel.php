@@ -156,6 +156,20 @@ class BasicModel extends Model
    
        return $result;
     }
+    public function play_basic()
+    {
+
+       // echo $id;
+       $sql = "SELECT * FROM `main_st`";
+       $query = $this->db->query($sql);
+       $result = $query->getResult();
+   
+       if (empty($result)) {
+           throw new Exception('No data found in main_status table.');
+       }
+   
+       return $result;
+    }
     public function lot()
     {
 
@@ -165,7 +179,7 @@ class BasicModel extends Model
        $result = $query->getResult();
    
        if (empty($result)) {
-           throw new Exception('No data found in g_rate table.');
+           throw new Exception('No data found in lot_st table.');
        }
    
        return $result;
