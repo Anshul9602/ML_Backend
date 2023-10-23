@@ -77,7 +77,7 @@ class PostModel extends Model
             ->first();
 
         if (!$post) 
-            throw new Exception('Service does not exist for specified id');
+            throw new Exception('Service does not exist for specified id1');
 
         return $post;
     }

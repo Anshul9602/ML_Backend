@@ -87,71 +87,46 @@ table img {
 .mb-xl-60 {
     margin-bottom: 60px;
 }
+body {
+    background-color: #053B50;
+    text-align: center;
+    padding: 3px 10px;
+    margin: 0;
+    scroll-behavior: smooth;
+    font-style: italic;
+    font-family: Helvetica, sans-serif;
+    font-weight: 700;
+}
 </style>
 
 </head>
 
 <body>
 
+        
 
     <section class="sec-logo">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="logo">
-                        <a href="#"><img style="padding-top: 6px;" class="img-fluid" width="220" src="image/apk.png"
-                                alt="apk-img"></a>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="logo">
-                        <a href="#"><img style="padding-top: 6px;" class="img-fluid" width="220" src="image/logo.png"
-                                alt="apk-logo"></a>
-                    </div>
-                </div>
+            <div class="row" style="padding:10%;">
+                <h1 style="color:#fff;">
+                <?php print_r($tt) ?>(<?php print_r($tth) ?>)
+                </h1>
+                
             </div>
         </div>
     </section>
 
-    <section class="my-table align-self-center">
-        <table>
-            <caption>MILAN MORNING Time 10:00 AM To 11:00 AM PANEL CHART 2023</caption>
-            <thead>
-                <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Mon</th>
-                    <th scope="col">Tue</th>
-                    <th scope="col">Wed</th>
-                    <th scope="col">Thu</th>
-                    <th scope="col">Fri</th>
-                    <th scope="col">Sat</th>
-                    <th scope="col">Sun</th>
-                </tr>
-            </thead>
-           <tbody>
-            <td>
-                01-07-2021 <br> to <br>
-                07-07-2021 </td>
-
-            <td>
-                <div class="vertical_text">
-                    <span>
-                        <p class="dnd-panel-tdp w3-text-red" style="margin-bottom:0px!important;">
-                            <strong>*</strong><br><strong>*</strong><br><strong>*</strong><br></p>
-                    </span>
-                    <span style="vertical-align:middle;">
-                        <p class="dnd-panel-tdp  dnd-fonts" style="margin-bottom:0px!important;">
-                            <strong>**</strong></p>
-                    </span>
-                    <span>
-                        <p class="dnd-panel-tdp w3-text-red" style="margin-bottom:0px!important;">
-                            <strong><strong>*</strong><br><strong>*</strong><br><strong>*</strong><br></strong>
-                        </p>
-                    </span>
-                </div>
-            </td>
-           </tbody>
-        </table>
+    <section class="my-table align-self-center row" style="    padding: 0 20px;">
+      
+        <?php   foreach ($post as $game){   
+            ?>
+        <div class="col-md-2 col-4 text-center " style="    border: 1px solid #fff;    padding: 10px;    color: #fff;">
+            <h6>Date: <?php print_r($game['result_date']) ?></h6>
+            <h2 class="bold"><?php print_r($game['start']) ?><?php print_r($game['start']) ?></h2>
+        </div>
+        <?php } ?>
+       </div>
+       
     </section>
 
 

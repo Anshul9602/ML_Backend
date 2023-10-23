@@ -34,6 +34,7 @@ $routes->set404Override();
 //user 
 $routes->get('/', 'Home::index');
 $routes->get('/chart', 'Chart::index');
+$routes->get('/chart/(:num)', 'Chart::index1/$1');
 $routes->get('/Privacy', 'Privacy::index');
 $routes->get('/check', 'Home::home');
 $routes->post('/auth/admin_register', 'Auth::admin_register');
