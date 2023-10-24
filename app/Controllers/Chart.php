@@ -110,10 +110,7 @@ class Chart extends BaseController
         $data['tt']= $tt1['g_title'];
         $data['tth']= $tt1['g_name_hindi'];
         
-        // echo "<pre>";
-        // print_r($post);
-        // echo "</pre>";
-        //     die();
+    
         $data['post'] = array();
         if ($post) {
 
@@ -122,6 +119,7 @@ class Chart extends BaseController
 
                 $game = $model1->findPostById($post1['g_id']);
                 if ($post1['Open_Panna'] && $post1['Close_Panna']) {
+                    
                     $open = $post1['Open_Panna'];
                     $start = 0;
                     for ($i = 0; $i < strlen($open); $i++) {
@@ -174,7 +172,11 @@ class Chart extends BaseController
                 } else {
                     $start1 = $start;
                 }
-
+                // echo "<pre>";
+                // print_r($end1);
+                // print_r($start1);
+                // echo "</pre>";
+                //     die();
 
                 $data['post'][] = array(
                     'g_id' => $game['g_id'],

@@ -122,7 +122,7 @@ body {
             ?>
         <div class="col-md-2 col-4 text-center " style="    border: 1px solid #fff;    padding: 10px;    color: #fff;">
             <h6>Date: <?php print_r($game['result_date']) ?></h6>
-            <h2 class="bold"><?php print_r($game['start']) ?><?php print_r($game['start']) ?></h2>
+            <h2 class="bold"><?php print_r($game['start']) ?><?php print_r($game['end']) ?></h2>
         </div>
         <?php } ?>
        </div>
