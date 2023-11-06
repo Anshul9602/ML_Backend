@@ -28,7 +28,7 @@ class Home extends BaseController
         $post = $model->findAll();
         foreach ($post as $game) {
 
-            $post1 = $model1->findGById1($game['g_id']);
+            $post1 = $model1->findGById11($game['g_id'],$date1);
             // echo "<pre>";
             // print_r($post1);
             // echo "</pre>";
@@ -40,7 +40,18 @@ class Home extends BaseController
                 $end = "*";
             } else {
                 if ($date1 == $post1['result_date']) {
-                    if ($post1['Open_Panna']) {
+                    if ($post1['Open_Panna'] && $post1['Close_Panna']) {
+                        $open = $post1['Open_Panna'];
+                        $start = 0;
+                        for ($i = 0; $i < strlen($open); $i++) {
+                            $start += intval($open[$i]);
+                        }
+                        $end = 0;
+                        $close = $post1['Close_Panna'];
+                        for ($i = 0; $i < strlen($close); $i++) {
+                            $end += intval($close[$i]);
+                        }
+                     } elseif ($post1['Open_Panna']) {
                         $open = $post1['Open_Panna'];
                         $start = 0;
 

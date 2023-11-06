@@ -36,7 +36,7 @@ class Result extends BaseController
         $game = $model->findAll();
 
         foreach ($game as $post) {
-
+            if ($date1 == $post['result_date']) {
             if ($post['Open_Panna'] && $post['Close_Panna']) {
                 $open = $post['Open_Panna'];
                 $start = 0;
@@ -96,7 +96,7 @@ class Result extends BaseController
                 'close_date' => $post['close_date'],
                 'result_date' => $post['result_date']
 
-            );
+            );}
         }
         return $this->getResponse(
             [

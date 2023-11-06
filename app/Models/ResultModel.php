@@ -169,6 +169,22 @@ class ResultModel extends Model
 
         
     }
+    public function findGById11($id,$date)
+    {
+        $post = $this
+            ->asArray()
+            ->where(['g_id' => $id,'result_date' => $date])
+            ->first();
+
+        if (!$post) {
+            return false;
+        }else{
+            return $post;
+        }
+          
+
+        
+    }
    
     public function findGById($id)
     {

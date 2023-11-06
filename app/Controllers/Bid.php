@@ -56,9 +56,14 @@ class Bid extends BaseController
         $date = date_default_timezone_set('Asia/Kolkata');
         $date1 = date("m-d-Y");
         $data['post'] = array();
-        foreach ($bid as $b1) {  
+        foreach ($bid as $b1) { 
+            
             $dateTime = \DateTime::createFromFormat('m-d-Y h:i A', $b1['date']);
-            $dateOnly = $dateTime->format('m-d-Y');
+            if ($dateTime === false) {
+    // Handle the case where the date string couldn't be converted
+    // You may need to reformat the date string here
+} else {
+    $dateOnly = $dateTime->format('m-d-Y');
             if($date1 == $dateOnly){
                 // echo "yes";
                $data['post'][] = array(
@@ -81,6 +86,8 @@ class Bid extends BaseController
                 );
             }
             }
+}
+            
 
 
 //     echo "<pre>"; print_r($bid);
